@@ -1,0 +1,36 @@
+{
+  "name": "ssh-keychain",
+  "version": "0.9.0",
+  "description": "RSA keychain for SSH agent",
+  "main": "index.js",
+  "scripts": {
+    "mocha": "node node_modules/mocha/bin/_mocha",
+    "test": "node node_modules/istanbul/lib/cli.js cover --report text-summary --report html --report lcov  node_modules/mocha/bin/_mocha",
+    "coveralls": "npm install coveralls && node ./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:131/ssh-keychain.git"
+  },
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "istanbul": "~0.3.18",
+    "mocha": "^2.2.5"
+  },
+  "keywords": [
+    "ssh",
+    "rsa",
+    "ssh-agent",
+    "keychain"
+  ],
+  "author": "Francois Leurent <131.js@cloudyks.org>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/131/ssh-keychain/issues"
+  },
+  "homepage": "https://github.com/131/ssh-keychain",
+  "dependencies": {
+    "node-rsa": "^0.4.2",
+    "nyks": "^3.18.0"
+  }
+}
