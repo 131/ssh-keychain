@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/131/ssh-keychain",
   "dependencies": {
+    "mout": "^1.0.0",
     "node-rsa": "^0.4.2",
     "nyks": "^3.18.0"
   }
