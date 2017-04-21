@@ -1,6 +1,5 @@
 "use strict";
 
-const crypto       = require('crypto');
 const EventEmitter = require('events').EventEmitter;
 
 const rsa    = require('node-rsa');
@@ -27,7 +26,7 @@ class KeyChain extends EventEmitter {
    if(Buffer.isBuffer(body))
       body = pemme(body, "RSA PRIVATE KEY");
 
-    var key = new rsa(body);
+    var key = new rsa(body, {signingScheme : 'pkcs1-sha1'});
     var details = key.exportKey('components');
 
  
@@ -74,9 +73,6 @@ class KeyChain extends EventEmitter {
     if(!key)
       throw "Invalid key";
 
-    //var signer = crypto.createSign('RSA-SHA1');
-    //signer.update(message);
-    //var sign = signer.sign(pemme(key.private, "RSA PRIVATE KEY"));
     var sign = key.private.sign(message);
 
     this.emit("sign", {fingerprint:key.fingerprint, comment:key.comment});
