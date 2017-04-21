@@ -94,7 +94,7 @@ class KeyChain extends EventEmitter {
   get keys() {
     var keys = [];
     forIn(this._keys_list, (key, key_id) => {
-      keys.push(pick(key, 'fingerprint', 'comment'));
+      keys.push(pick(key, 'public', 'fingerprint', 'comment'));
     });
 
     this.emit("list_keys");
