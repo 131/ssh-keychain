@@ -28,11 +28,17 @@ class KeyChain extends EventEmitter {
 
     var key = new rsa(body, {signingScheme : 'pkcs1-sha1'});
     var details = key.exportKey('components');
-
  
     var writeb = function(data) {
       if(typeof data == "string") data = new Buffer(data);
-      var body = Buffer.isBuffer(data) ? data : new Buffer([data]);
+
+      var body = data;
+      if(!Buffer.isBuffer(body)) {
+        body = new Buffer( 4);
+        body.writeUInt32BE(data);
+        body = body.slice(-Math.ceil(Math.log1p(data) /Math.log(256)) ); //trim leading zeros
+      }
+        
 
       var size = new Buffer(4); size.writeUInt32BE(body.length, 0);
       return Buffer.concat([size, body]);

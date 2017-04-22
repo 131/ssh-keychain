@@ -5,7 +5,7 @@ const path = require('path');
 
 const expect = require('expect.js');
 const KeyChain = require('../');
-const rsa    = require('node-rsa');
+const NodeRSA  = require('node-rsa');
 
 
 describe("Testing keychain", function(){
@@ -18,11 +18,15 @@ describe("Testing keychain", function(){
   });
 
 
-  const mockKey   = fs.readFileSync(path.join(__dirname, 'mock/test.rsa'), "utf-8");
-  const mockKeyFP = fs.readFileSync(path.join(__dirname, 'mock/test.rsa.fingerprint'), "utf-8")
-                      .replace(new RegExp(':','g'), '').trim();
+  var mockKeyFP = '10a15d351701f11bf9dbfcd728917a5e';
+  const mockKey   = fs.readFileSync(path.join(__dirname, 'mock', mockKeyFP), "utf-8");
 
-  const mockKeyDER   =   (new rsa(mockKey)).exportKey('pkcs1-der');
+
+  const pkey      = new NodeRSA(mockKey);
+  const mockKeyDER   =   pkey.exportKey('pkcs1-der');
+
+
+console.log(pkey.exportKey('components'));
 
   it("should add new key in keychain", function(){
     vault.add_key(mockKey);
