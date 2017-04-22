@@ -1,6 +1,6 @@
 {
   "name": "ssh-keychain",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "RSA keychain for SSH agent",
   "main": "index.js",
   "scripts": {
