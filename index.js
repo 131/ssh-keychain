@@ -77,7 +77,7 @@ class KeyChain extends EventEmitter {
     //console.log("Request for signing of key", keyInfo);
     var key = this._lookup(keyInfo);
     if(!key)
-      throw "Invalid key";
+      throw `Failed to sign, invalid key ${keyInfo}`;
 
     var sign = key.private.sign(message);
 
@@ -85,8 +85,12 @@ class KeyChain extends EventEmitter {
     return sign;
   }
 
-  remove_key(fingerprint) {
-    delete this._keys_list[fingerprint];
+  remove_key(keyInfo) {
+    var key = this._lookup(keyInfo);
+    if(!key)
+      throw `Invalid key ${keyInfo}`;
+
+    delete this._keys_list[key.fingerprint];
   }
 
   remove_keys() {
@@ -97,6 +101,7 @@ class KeyChain extends EventEmitter {
     var keys = [];
     forIn(this._keys_list, (key, key_id) => {
       keys.push(pick(key, 'public', 'fingerprint', 'comment'));
+
     });
 
     this.emit("list_keys");
