@@ -7,7 +7,8 @@
     "mocha": "node node_modules/mocha/bin/_mocha -b",
     "cover": "nyc mocha",
     "eslint": "eslint .",
-    "test": "npm run eslint && npm run mocha"
+    "test": "npm run eslint && npm run mocha",
+    "checkall": "npm run eslint && npm run cover"
   },
   "repository": {
     "type": "git",

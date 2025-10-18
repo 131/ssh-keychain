@@ -9,7 +9,7 @@ jobs:
       with:
         node-version: '22.x'
     - run: npm install
-    - run: npm test
+    - run: npm run checkall
     - name: Coveralls
       uses: coverallsapp/github-action@master
       with:
