@@ -4,18 +4,14 @@
   "description": "RSA keychain for SSH agent",
   "main": "index.js",
   "scripts": {
-    "mocha": "node node_modules/mocha/bin/_mocha",
-    "test": "node node_modules/istanbul/lib/cli.js cover --report text-summary --report html --report lcov  node_modules/mocha/bin/_mocha",
-    "coveralls": "npm install coveralls && node ./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info"
+    "mocha": "node node_modules/mocha/bin/_mocha -b",
+    "cover": "nyc mocha",
+    "eslint": "eslint .",
+    "test": "npm run eslint && npm run mocha"
   },
   "repository": {
     "type": "git",
     "url": "git@github.com:131/ssh-keychain.git"
-  },
-  "devDependencies": {
-    "expect.js": "^0.3.1",
-    "istanbul": "~0.3.18",
-    "mocha": "^2.2.5"
   },
   "keywords": [
     "ssh",
@@ -33,5 +29,12 @@
     "mout": "^1.0.0",
     "node-rsa": "^0.4.2",
     "nyks": "^3.18.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-plugin-ivs": "^4.0.1",
+    "expect.js": "^0.3.1",
+    "mocha": "^3.1.2",
+    "nyc": "^15.0.1"
   }
 }

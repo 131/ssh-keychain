@@ -1,8 +1,8 @@
 "use strict";
 
-const EventEmitter = require('events').EventEmitter;
+const {EventEmitter} = require('events');
 
-const rsa    = require('node-rsa');
+const Rsa    = require('node-rsa');
 const pick   = require('mout/object/pick');
 const forIn  = require('mout/object/forIn');
 
@@ -15,47 +15,47 @@ class KeyChain extends EventEmitter {
     super();
     this._keys_list  = {};
 
-    this.on("sign", function(){
+    this.on("sign", function() {
       //console.log("In signing stuffs");
     });
 
   }
 
-  add_key (body, comment) {
+  add_key(body, comment) {
 
-   if(Buffer.isBuffer(body))
+    if(Buffer.isBuffer(body))
       body = pemme(body, "RSA PRIVATE KEY");
 
-    var key = new rsa(body, {signingScheme : 'pkcs1-sha1'});
+    var key = new Rsa(body, {signingScheme : 'pkcs1-sha1'});
     var details = key.exportKey('components');
- 
+
     var writeb = function(data) {
       if(typeof data == "string") data = new Buffer(data);
 
       var body = data;
       if(!Buffer.isBuffer(body)) {
-        body = new Buffer( 4);
+        body = new Buffer(4);
         body.writeUInt32BE(data);
-        body = body.slice(-Math.ceil(Math.log1p(data) /Math.log(256)) ); //trim leading zeros
+        body = body.slice(-Math.ceil(Math.log1p(data) / Math.log(256))); //trim leading zeros
       }
-        
+
 
       var size = new Buffer(4); size.writeUInt32BE(body.length, 0);
       return Buffer.concat([size, body]);
-    }
-      //openssl public
-    var publicKey = Buffer.concat([ writeb("ssh-rsa"), writeb(details.e), writeb(details.n) ]);
+    };
+    //openssl public
+    var publicKey = Buffer.concat([writeb("ssh-rsa"), writeb(details.e), writeb(details.n)]);
     var fingerprint = md5(publicKey);
 
 
-    this.emit("add_key", {comment: comment} );
+    this.emit("add_key", {comment : comment});
 
     this._keys_list[fingerprint] = {
-        fingerprint,
-        public : publicKey,
-        private : key,
-        comment : comment,
-        algo    : 'rsa',
+      fingerprint,
+      public : publicKey,
+      private : key,
+      comment : comment,
+      algo    : 'rsa',
     };
 
   }
@@ -72,7 +72,7 @@ class KeyChain extends EventEmitter {
     return k;
   }
 
-  sign (keyInfo, message) {
+  sign(keyInfo, message) {
 
     //console.log("Request for signing of key", keyInfo);
     var key = this._lookup(keyInfo);
@@ -81,7 +81,7 @@ class KeyChain extends EventEmitter {
 
     var sign = key.private.sign(message);
 
-    this.emit("sign", {fingerprint:key.fingerprint, comment:key.comment});
+    this.emit("sign", {fingerprint : key.fingerprint, comment : key.comment});
     return sign;
   }
 
@@ -99,7 +99,7 @@ class KeyChain extends EventEmitter {
 
   get keys() {
     var keys = [];
-    forIn(this._keys_list, (key, key_id) => {
+    forIn(this._keys_list, (key /*, key_id*/) => {
       keys.push(pick(key, 'public', 'fingerprint', 'comment'));
 
     });

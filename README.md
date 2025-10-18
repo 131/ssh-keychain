@@ -1,7 +1,7 @@
 
 ssh-keychain is a RSA vault you can add, list and remove keys from.
 
-[![Build Status](https://travis-ci.org/131/ssh-keychain.svg?branch=master)](https://travis-ci.org/131/ssh-keychain)
+[![Build Status](https://github.com/131/ubk/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/131/ubk/actions/workflows/test.yml)
 [![Coverage Status](https://coveralls.io/repos/github/131/ssh-keychain/badge.svg?branch=master)](https://coveralls.io/github/131/ssh-keychain?branch=master)
 [![Version](https://img.shields.io/npm/v/ssh-keychain.svg)](https://www.npmjs.com/package/ssh-keychain)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
